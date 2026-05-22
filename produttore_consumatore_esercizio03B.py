@@ -25,7 +25,21 @@ class ProduttoreThread(threading.Thread):
         super().__init__()
         self.idx = idx
 
-    # DA IMPLEMENTARE (run)
+   self.dato=genera_drone()
+   def run(self):
+    global
+    genera_drone=0
+    while genera_drone<N_RICHIESTE
+        vuoto.acquire()
+        mutexP.acquire()
+        i_metti=metti
+        metti=(metti+1) %DIM_BUFFER
+        mutexP.relase()
+        buffe[i_metti]=self.dato
+        genera_drone+=1
+        print{f"[SENSOR-N--{self.idx} drone segnalato{self-dato} inserito nel buffer {i_metti}]"}
+        self.dato=genera_drone
+     pieno.relase()
 
 
 class ConsumatoreThread(threading.Thread):
@@ -33,7 +47,21 @@ class ConsumatoreThread(threading.Thread):
         super().__init__()
         self.idx = idx
 
-    # DA IMPLEMENTARE (run)
+    def run(self)
+        global=togli
+        termina=None4
+        while not(None):
+            pieno.acquire()
+            mutexC.acquire()
+            i_togli=togli
+            togli=(togli+1)%DIM_BUFFER
+            mutexC.relase()
+            if dato==None
+            termina= True
+            else:
+                print(f"[RUNWAY-N{self.idx} autorizza atterraggio {self.dato} inserito nel buffer {i_metti}]")
+        pieno.relase()
+            
 
 
 def main():
@@ -41,19 +69,28 @@ def main():
 
     produttori = [ProduttoreThread(i + 1) for i in range(N_PRODUTTORI)]
     consumatori = [ConsumatoreThread(i + 1) for i in range(N_CONSUMATORI)]
+  
+    for c in consumatori:
+        c.start()
+    for p in produttori
+        c.start()
 
-    # DA IMPLEMENTARE: start dei thread produttori e consumatori
-
-    # DA IMPLEMENTARE: join di tutti i produttori
+   
+    for p in produttori
+        p.join ()
 
     print("Tutti i sensori hanno terminato. Chiusura piste...")
 
-    # Invia una sentinella None per ogni pista attiva.
+    
     for _ in range(N_CONSUMATORI):
-        # DA IMPLEMENTARE: inserire None nel buffer
+       vuoto.acquire()
+       pieno.relase()
         pass
 
-    # DA IMPLEMENTARE: join di tutti i consumatori
+
+  for c in consumatori:
+    c.join()
+
 
     print("Torre operativa chiusa.")
 
